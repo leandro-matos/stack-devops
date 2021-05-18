@@ -1,0 +1,21 @@
+---
+# tasks file for ngnix
+- name: "copy config file"
+  copy: 
+    src: "./files/default.conf"
+    dest: "/etc/nginx/conf.d/"
+
+- name: "copy cep.html"
+  copy: 
+    src: "./files/cep.html"
+    dest: "/var/www/html/"
+
+- name: data container nginx
+  docker_container:
+    name: nginx
+    image: nginx
+    state: started
+    ports: '8080:80'
+    volumes: 
+      - /etc/nginx/conf.d/:/etc/nginx/conf.d/
+      - /var/www/html:/usr/share/nginx/html

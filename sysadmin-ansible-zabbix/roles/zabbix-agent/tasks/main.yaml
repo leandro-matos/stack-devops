@@ -1,0 +1,17 @@
+---
+# tasks file for zabbix-agent
+
+- name: Install the zabbix rpm from a remote repo
+  yum:
+    name: http://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+    state: present
+
+- name: Install zabbix agent 2
+  yum:
+    name: zabbix-agent2.x86_64    
+    state: latest
+  notify: restart zabbix agent
+
+- name: Copy template zabbix-agent2.conf
+  template: src=zabbix_agent2.conf dest=/etc/zabbix/zabbix_agent2.conf
+  notify: restart zabbix agent

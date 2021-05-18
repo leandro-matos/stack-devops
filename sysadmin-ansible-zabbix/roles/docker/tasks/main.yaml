@@ -1,0 +1,41 @@
+---
+# tasks file for docker
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install epel-release
+  yum:
+    name:
+    - https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+- name: Add Docker repository
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
+
+- name: Install python-pip
+  yum:
+    name:
+      - python3-pip
+
+- name: Install docker
+  yum:
+    name:
+      - docker-ce-3:19.03.13-3.el8
+    state: installed  
+
+- name: Download and install Docker-Compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.29.0/docker-compose-Linux-x86_64
+    dest: /usr/bin/docker-compose
+    mode: 0755
+
+- name: Install docker-py
+  pip:
+    name:
+     - docker-py
+
+- name: start_docker
+  service: name=docker enabled=yes state=restarted

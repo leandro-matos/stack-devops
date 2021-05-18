@@ -1,0 +1,10 @@
+- hosts:  all
+  become: True
+  become_user: root
+ 
+  roles:
+         - { role: docker}
+         - { role: zabbix}
+         - { role: nginx}
+         - { role: zabbix-agent} 
+

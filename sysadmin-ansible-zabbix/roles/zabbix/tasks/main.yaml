@@ -1,0 +1,9 @@
+---
+# tasks file for zabbix
+- name: "copy docker-compose file"
+  copy:
+    src: ./files/docker-compose.yml
+    dest: /tmp/docker-compose.yml
+
+- name: "docker-compose up"
+  command: "docker-compose -f {{ docker_compose_file }} up -d"
